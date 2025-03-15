@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - E-Commerce Website</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css">
+</head>
+<body>
+    
+    <!-- ============== Navbar ============== -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
+        <a class="navbar-brand" href="index.html">
+            <img src="assets/images/logo.png" class="img-fluid" width="120px" alt="logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="category.html">Categories</a></li>
+                <li class="nav-item"><a class="nav-link" href="product.html">Products</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- ============== Product Details Page ============== -->
+    <section class="product-detail py-5 my-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="assets/images/product1.jpg" class="img-fluid rounded shadow-lg" alt="Product Image">
+                </div>
+                <div class="col-md-6">
+                    <h2>Product Name</h2>
+                    <p class="text-muted">Category: Electronics</p>
+                    <h4 class="text-danger">₹1499</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae justo eu metus tincidunt aliquet.</p>
+                    <label>Quantity:</label>
+                    <input type="number" value="1" min="1" class="form-control w-25 d-inline">
+                    <div class="mt-4">
+                        <a href="cart.html" class="btn btn-primary">Add to Cart</a>
+                        <a href="checkout.html" class="btn btn-success">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ============== Footer ============== -->
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2025 E-Commerce Website. All Rights Reserved. | Developed by Suresh</p>
+    </footer>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
