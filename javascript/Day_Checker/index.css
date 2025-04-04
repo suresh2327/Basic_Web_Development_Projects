@@ -1,0 +1,29 @@
+div{
+    background-color: gray;
+    padding: 10px;
+    text-align: center;
+    margin-top: 200px;
+    width: fit-content;
+    margin-left: 30vw;
+}
+h1{
+    color: white;
+
+}
+#btn{
+    color: blue;
+    background-color: lightblue;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
+    transition: all 0.5s ;
+    border-radius: 50%;
+}
+#para{
+    
+    color: white;
+}
+#btn:active{
+    background-color: aquamarine;
+}
+
