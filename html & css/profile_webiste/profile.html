@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Profile Website</title>
+    <style>
+        body {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            background-color: lightslategray;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        div {
+            background-color: lightcyan;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 5px;
+        }
+
+        /* Make tables and content responsive */
+        table {
+            width: 100%;
+            max-width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: grey;
+            color: white;
+        }
+
+        img {
+            border-radius: 50%;
+            box-shadow: 0 0 10px black;
+            max-width: 100%;
+            height: auto;
+        }
+
+        iframe {
+            width: 100%;
+            height: 200px;
+            border: 0;
+        }
+
+        /* Flexbox for layout */
+        .profile-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .profile-info {
+            flex: 1 1 300px;
+            text-align: center;
+            margin: 20px;
+        }
+
+        /* Make it stack vertically on smaller screens */
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+            }
+
+            .profile-container {
+                flex-direction: column;
+            }
+
+            iframe {
+                height: 250px;
+            }
+
+            th, td {
+                font-size: 14px;
+            }
+
+            h2, h3, h4 {
+                font-size: 1.5em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+
+            .profile-info {
+                padding: 10px;
+            }
+
+            iframe {
+                height: 200px;
+            }
+
+            th, td {
+                font-size: 12px;
+            }
+
+            h2, h3, h4 {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Profile data -->
+    <div>
+        <h2>Profile Data</h2>
+        <div class="profile-container">
+            <div class="profile-info">
+                <img src="./IMG-20241027-WA0019.jpg" alt="Suresh image" height="300px" width="200px">
+            </div>
+            <div class="profile-info">
+                <h3>SURESH GADI</h3>
+                <h4>+91-9866715530</h4>
+                <p>sureshgadi68@gmail.com</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bio data -->
+    <div>
+        <h2>Bio</h2>
+        <p>
+            Suresh <br>
+            B.Tech, 2nd Year (ECE)<br>
+            Aditya University<br><hr>
+            Enthusiastic and fast-learning Electronics and Communication Engineering (ECE) student with a strong foundation in programming languages including C, Python, HTML, and CSS. Skilled in problem-solving and eager to apply technical knowledge in real-world applications. Seeking opportunities to expand expertise and contribute to innovative projects.
+        </p>
+    </div>
+
+    <!-- Experience section -->
+    <div>
+        <h2>Experience</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>SNo</th>
+                    <th>Company</th>
+                    <th>Duration</th>
+                    <th>Designation</th>
+                    <th>Work</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="5">No experience</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Project information -->
+    <div>
+        <h2>Projects Information</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>SNo</th>
+                    <th>Project Name</th>
+                    <th>Technologies Used</th>
+                    <th>Roles and Responsibilities</th>
+                    <th>Project Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Profile Website</td>
+                    <td>HTML and CSS</td>
+                    <td>Junior Developer</td>
+                    <td>2 hours</td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>Project Description</h4>
+        <p><b>Profile Website</b><br>
+            Role: Junior Developer<br>
+            Technologies Used: HTML, CSS<br><br>
+            Worked as a junior developer to build a personal profile website using HTML and CSS. The website includes sections for a bio, skills, projects, and contact information. My tasks included creating a responsive design so the site works well on both computers and mobile devices, and making sure the visual elements were properly styled.
+        </p>
+    </div>
+
+    <!-- Hobbies and interests -->
+    <div>
+        <h2>Hobbies & Interests</h2>
+        <ul>
+            <li>Learning new coding skills</li>
+            <li>Daily coding</li>
+            <li>Watching interesting facts on the internet</li>
+            <li>Working on my interests</li>
+        </ul>
+    </div>
+
+    <!-- Contact info -->
+    <div>
+        <h2>Contact Info</h2>
+        <div class="profile-container">
+            <div class="profile-info">
+                <h3>Suresh Gadi</h3>
+                <p>
+                    My Home<br>
+                    Door No: 1-218<br>
+                    Palakol, 534250<br>
+                    +91-9866715530<br>
+                    sureshgadi68@gmail.com
+                </p>
+            </div>
+            <div class="profile-info">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30601.02532515107!2d81.72358385!3d16.519626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a37dafa23f8abc1%3A0xfe281f58c5226d96!2sPalakollu%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1729534001083!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
