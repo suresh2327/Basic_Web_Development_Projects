@@ -1,0 +1,53 @@
+*{
+    margin: 10px;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.container{
+    background-color: lightblue;
+    text-align: center;
+    width: max-content;
+    margin: 100px  auto;
+    padding: 20px;
+    box-shadow: 0 0 ;
+    
+}
+.button{
+    padding: 5px 10px;
+    font-size: 1.5em;
+    border-radius: 5px;
+    border: none;
+   cursor: pointer;
+ 
+   box-shadow: 0 0 5px;
+}
+#red{
+    background-color: red;
+}
+#red:active{
+    background-color: rgb(240, 66, 66);
+}
+#green{
+    background-color: green;
+}
+#green:active{
+    background-color: rgb(33, 227, 33);
+}
+#blue{
+    background-color: rgb(7, 7, 233);
+}
+#blue:active{
+    background-color: rgb(89, 89, 242);
+    
+}
+#random:active{
+    color:black ;
+    background-color: rgba(12, 194, 161, 0.925);
+}
+.button:active{
+    color: white;
+    
+}
+h1{
+    color: saddlebrown;
+}
