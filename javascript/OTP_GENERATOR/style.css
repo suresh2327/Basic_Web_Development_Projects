@@ -1,0 +1,25 @@
+body{
+    background-color: blanchedalmond;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+#btn{
+    background-color: yellowgreen;
+    padding: 10px 25px;
+    font-size: 1.5em;
+    
+}
+#mylabel{
+    font-size: 1.5em;
+  color: cadetblue;
+    margin: auto;
+    margin-top: 5px;
+
+}
+.random{
+    background-color: lightgray;
+    margin: 200px auto;
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: 200px;
+}
