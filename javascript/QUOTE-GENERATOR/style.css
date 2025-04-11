@@ -1,0 +1,28 @@
+*{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.container{
+    background-color: cadetblue;
+    padding: 20px;
+    text-align: center;
+   
+    margin: 100px auto;
+}
+#mybutton{
+    background-color: brown;
+    padding:5px 10px;
+    font-size: 25px;
+}
+ #mybutton:hover{
+    background-color: rgb(226, 28, 28);
+    cursor: pointer;
+}
+#quote{
+    font-size: 20px;
+    color: white;
+    margin-top: 10px;
+    font-style: italic;
+    background-color: rgb(29, 122, 204);
+    border-radius: 10px;
+   
+}
