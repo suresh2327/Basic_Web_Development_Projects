@@ -1,0 +1,471 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Information Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff7a8d, #f8b3c2); /* Soft pink gradient */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure full height of page */
+        }
+        
+        /* Navigation Bar */
+        nav {
+            background: linear-gradient(45deg, #f2c2e4, #4d9f8e); /* Modern gradient */
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            margin: 0 20px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        nav ul li a:hover {
+            background-color: #4e6e81;
+            transform: scale(1.1);
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(45deg, #ff8a84, #f63b7a); /* Vibrant red to pink gradient */
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        header h1 {
+            font-size: 36px;
+        }
+        header p {
+            font-size: 18px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .search-bar {
+            width: 60%;
+            padding: 15px;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .search-bar:focus {
+            border-color: #4e6e81;
+            box-shadow: 0 0 10px rgba(78, 110, 129, 0.3);
+        }
+
+        /* Suggestions */
+        .suggestions {
+            width: 60%;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            display: none;
+        }
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, padding 0.3s;
+        }
+        .suggestion-item:hover {
+            background-color: #f0f0f0;
+            padding-left: 20px;
+        }
+
+        /* Medicine Details */
+        .medicine-details {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 70%;
+            margin: 40px auto;
+        }
+        .medicine-details h2 {
+            color: #5f6368;
+        }
+        .medicine-details p {
+            font-size: 18px;
+            color: #333;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #4d9f8e; /* Elegant green color */
+            color: white;
+            position: relative;
+            width: 100%;
+            margin-top: auto; /* Footer stays at the bottom */
+        }
+
+        /* Media Queries for Mobile */
+        @media (max-width: 768px) {
+            .search-bar {
+                width: 80%;
+            }
+            .medicine-details {
+                width: 90%;
+            }
+            nav ul {
+                flex-direction: column;
+            }
+            nav ul li {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav>
+    <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+        <li><a href="#medicines">See Medicines</a></li>
+    </ul>
+</nav>
+
+<!-- Header Section -->
+<header>
+    <h1>Medicine Information Portal</h1>
+    <p>Search for medicines and learn more about them!</p>
+</header>
+
+<!-- Search Section -->
+<div class="search-container">
+    <input type="text" class="search-bar" id="searchInput" placeholder="Search for medicines..." onkeyup="showSuggestions(this.value)">
+</div>
+
+<!-- Suggestions Section -->
+<div class="suggestions" id="suggestions">
+    <!-- Suggestions will appear here -->
+</div>
+
+<!-- Medicine Details -->
+<div class="medicine-details" id="medicineDetails" style="display: none;">
+    <h2 id="medicineName">Medicine Name</h2>
+    <p><strong>Purpose:</strong> Description of the purpose.</p>
+    <p><strong>Side Effects:</strong> Common side effects of the medicine.</p>
+    <p><strong>Age to Use:</strong> Recommended age group for the medicine.</p>
+    <p><strong>Drugs Used:</strong> Active ingredients of the tablet.</p>
+    <p><strong>Dosage per Day:</strong> Recommended dosage per day.</p>
+    <p><strong>References:</strong> <a href="https://en.wikipedia.org/wiki/Main_Page" target="_blank">Wikipedia</a></p>
+</div>
+
+<!-- Footer Section -->
+<div class="footer">
+    <p>© 2025 Suresh | All rights reserved</p>
+</div>
+
+<script>
+  const medicines = [
+    // A
+    { name: 'Amoxicillin', purpose: 'Antibiotic used to treat infections', sideEffects: 'Rash, nausea, diarrhea', ageToUse: 'All ages', drugUsed: 'Amoxicillin', dosagePerDay: '500mg every 8 hours', link: 'https://en.wikipedia.org/wiki/Amoxicillin' },
+    { name: 'Aspirin', purpose: 'Pain reliever and anti-inflammatory', sideEffects: 'Stomach upset, gastrointestinal bleeding', ageToUse: 'Adults and children above 12', drugUsed: 'Acetylsalicylic acid', dosagePerDay: '325mg every 4-6 hours', link: 'https://en.wikipedia.org/wiki/Aspirin' },
+    { name: 'Atorvastatin', purpose: 'Used to lower cholesterol', sideEffects: 'Muscle pain, liver issues', ageToUse: 'Adults', drugUsed: 'Atorvastatin', dosagePerDay: '10-80mg once a day', link: 'https://en.wikipedia.org/wiki/Atorvastatin' },
+    { name: 'Albuterol', purpose: 'Bronchodilator for asthma and COPD', sideEffects: 'Nausea, dizziness, rapid heartbeat', ageToUse: 'Children above 4, adults', drugUsed: 'Albuterol', dosagePerDay: '2 inhalations every 4-6 hours as needed', link: 'https://en.wikipedia.org/wiki/Albuterol' },
+    { name: 'Aripiprazole', purpose: 'Antipsychotic used for schizophrenia', sideEffects: 'Dizziness, insomnia, weight gain', ageToUse: 'Adults and children over 6', drugUsed: 'Aripiprazole', dosagePerDay: '10-30mg once a day', link: 'https://en.wikipedia.org/wiki/Aripiprazole' },
+    { name: 'Amlodipine', purpose: 'Used to treat high blood pressure', sideEffects: 'Swelling, dizziness, flushing', ageToUse: 'Adults', drugUsed: 'Amlodipine', dosagePerDay: '5-10mg once a day', link: 'https://en.wikipedia.org/wiki/Amlodipine' },
+    { name: 'Azithromycin', purpose: 'Antibiotic for bacterial infections', sideEffects: 'Nausea, diarrhea, stomach pain', ageToUse: 'Children over 6 months, adults', drugUsed: 'Azithromycin', dosagePerDay: '500mg once a day', link: 'https://en.wikipedia.org/wiki/Azithromycin' },
+    { name: 'Alprazolam', purpose: 'Benzodiazepine for anxiety', sideEffects: 'Drowsiness, memory problems', ageToUse: 'Adults', drugUsed: 'Alprazolam', dosagePerDay: '0.25-0.5mg 3 times a day', link: 'https://en.wikipedia.org/wiki/Alprazolam' },
+
+    // B
+    { name: 'Baclofen', purpose: 'Muscle relaxant for muscle spasms', sideEffects: 'Drowsiness, dizziness', ageToUse: 'Adults', drugUsed: 'Baclofen', dosagePerDay: '5mg 3 times a day', link: 'https://en.wikipedia.org/wiki/Baclofen' },
+    { name: 'Benadryl', purpose: 'Antihistamine for allergy symptoms', sideEffects: 'Drowsiness, dry mouth', ageToUse: 'Adults and children above 6', drugUsed: 'Diphenhydramine', dosagePerDay: '25-50mg every 4-6 hours', link: 'https://en.wikipedia.org/wiki/Diphenhydramine' },
+    { name: 'Bupropion', purpose: 'Antidepressant for depression and smoking cessation', sideEffects: 'Insomnia, dry mouth, headache', ageToUse: 'Adults', drugUsed: 'Bupropion', dosagePerDay: '150-400mg once a day', link: 'https://en.wikipedia.org/wiki/Bupropion' },
+    { name: 'Bisoprolol', purpose: 'Beta blocker for high blood pressure', sideEffects: 'Fatigue, dizziness', ageToUse: 'Adults', drugUsed: 'Bisoprolol', dosagePerDay: '2.5-10mg once a day', link: 'https://en.wikipedia.org/wiki/Bisoprolol' },
+    { name: 'Betamethasone', purpose: 'Steroid for inflammation', sideEffects: 'Weight gain, mood changes', ageToUse: 'Adults and children over 2', drugUsed: 'Betamethasone', dosagePerDay: '0.6-9mg per day', link: 'https://en.wikipedia.org/wiki/Betamethasone' },
+    { name: 'Benzonatate', purpose: 'Cough suppressant', sideEffects: 'Dizziness, drowsiness', ageToUse: 'Adults and children over 10', drugUsed: 'Benzonatate', dosagePerDay: '100-200mg 3 times a day', link: 'https://en.wikipedia.org/wiki/Benzonatate' },
+    { name: 'Bacitracin', purpose: 'Antibiotic ointment for skin infections', sideEffects: 'Redness, itching', ageToUse: 'All ages', drugUsed: 'Bacitracin', dosagePerDay: 'Apply to affected area 1-3 times a day', link: 'https://en.wikipedia.org/wiki/Bacitracin' },
+
+    // C
+    { name: 'Cetirizine', purpose: 'Antihistamine for allergy symptoms', sideEffects: 'Drowsiness, dry mouth', ageToUse: 'Children over 6, adults', drugUsed: 'Cetirizine', dosagePerDay: '10mg once a day', link: 'https://en.wikipedia.org/wiki/Cetirizine' },
+    { name: 'Ciprofloxacin', purpose: 'Antibiotic used to treat bacterial infections', sideEffects: 'Nausea, diarrhea, headache', ageToUse: 'Adults and children over 1', drugUsed: 'Ciprofloxacin', dosagePerDay: '500mg twice a day', link: 'https://en.wikipedia.org/wiki/Ciprofloxacin' },
+    { name: 'Clonazepam', purpose: 'Benzodiazepine used for anxiety and seizures', sideEffects: 'Drowsiness, dizziness, memory problems', ageToUse: 'Adults', drugUsed: 'Clonazepam', dosagePerDay: '0.25-2mg twice a day', link: 'https://en.wikipedia.org/wiki/Clonazepam' },
+    { name: 'Citalopram', purpose: 'Antidepressant for depression and anxiety', sideEffects: 'Nausea, insomnia, dry mouth', ageToUse: 'Adults', drugUsed: 'Citalopram', dosagePerDay: '20-40mg once a day', link: 'https://en.wikipedia.org/wiki/Citalopram' },
+    { name: 'Carvedilol', purpose: 'Beta-blocker for high blood pressure', sideEffects: 'Dizziness, fatigue', ageToUse: 'Adults', drugUsed: 'Carvedilol', dosagePerDay: '12.5-25mg twice a day', link: 'https://en.wikipedia.org/wiki/Carvedilol' },
+    { name: 'Clindamycin', purpose: 'Antibiotic for bacterial infections', sideEffects: 'Nausea, diarrhea', ageToUse: 'All ages', drugUsed: 'Clindamycin', dosagePerDay: '150-450mg 3 times a day', link: 'https://en.wikipedia.org/wiki/Clindamycin' },
+    { name: 'Chlorpheniramine', purpose: 'Antihistamine for allergy relief', sideEffects: 'Drowsiness, dry mouth', ageToUse: 'Adults and children above 6', drugUsed: 'Chlorpheniramine', dosagePerDay: '4mg every 4-6 hours', link: 'https://en.wikipedia.org/wiki/Chlorpheniramine' },
+
+    // D
+    { name: 'Diphenhydramine', purpose: 'Antihistamine for allergy symptoms', sideEffects: 'Drowsiness, dry mouth', ageToUse: 'Adults and children above 6', drugUsed: 'Diphenhydramine', dosagePerDay: '25-50mg every 4-6 hours', link: 'https://en.wikipedia.org/wiki/Diphenhydramine' },
+    { name: 'Doxycycline', purpose: 'Antibiotic for bacterial infections', sideEffects: 'Nausea, sensitivity to sunlight', ageToUse: 'Adults and children above 8', drugUsed: 'Doxycycline', dosagePerDay: '100mg twice a day', link: 'https://en.wikipedia.org/wiki/Doxycycline' },
+    { name: 'Dexamethasone', purpose: 'Steroid for inflammation and autoimmune diseases', sideEffects: 'Weight gain, fluid retention', ageToUse: 'Adults and children', drugUsed: 'Dexamethasone', dosagePerDay: '0.75-9mg per day', link: 'https://en.wikipedia.org/wiki/Dexamethasone' },
+    { name: 'Desloratadine', purpose: 'Antihistamine for allergies', sideEffects: 'Dry mouth, headache', ageToUse: 'Adults and children above 6', drugUsed: 'Desloratadine', dosagePerDay: '5mg once a day', link: 'https://en.wikipedia.org/wiki/Desloratadine' },
+    { name: 'Diazepam', purpose: 'Benzodiazepine for anxiety and seizures', sideEffects: 'Drowsiness, dizziness', ageToUse: 'Adults', drugUsed: 'Diazepam', dosagePerDay: '2-10mg 2-4 times a day', link: 'https://en.wikipedia.org/wiki/Diazepam' },
+    { name: 'Duloxetine', purpose: 'Antidepressant for depression and anxiety', sideEffects: 'Nausea, dizziness, sleep problems', ageToUse: 'Adults', drugUsed: 'Duloxetine', dosagePerDay: '30-120mg once a day', link: 'https://en.wikipedia.org/wiki/Duloxetine' },
+    { name: 'Dapsone', purpose: 'Antibiotic for leprosy and malaria', sideEffects: 'Nausea, rash', ageToUse: 'Adults', drugUsed: 'Dapsone', dosagePerDay: '50-100mg once a day', link: 'https://en.wikipedia.org/wiki/Dapsone' },
+
+    // E
+    { name: 'Erythromycin', purpose: 'Antibiotic for bacterial infections', sideEffects: 'Nausea, stomach cramps', ageToUse: 'Adults and children', drugUsed: 'Erythromycin', dosagePerDay: '250-500mg 4 times a day', link: 'https://en.wikipedia.org/wiki/Erythromycin' },
+    { name: 'Escitalopram', purpose: 'Antidepressant for depression and anxiety', sideEffects: 'Drowsiness, dry mouth', ageToUse: 'Adults', drugUsed: 'Escitalopram', dosagePerDay: '10-20mg once a day', link: 'https://en.wikipedia.org/wiki/Escitalopram' },
+
+    
+    
+    // E
+    { name: 'Erythromycin', purpose: 'Antibiotic for bacterial infections', sideEffects: 'Nausea, stomach cramps, diarrhea', ageToUse: 'Adults and children', drugUsed: 'Erythromycin', dosagePerDay: '250-500mg every 6 hours', link: 'https://en.wikipedia.org/wiki/Erythromycin' },
+    { name: 'Escitalopram', purpose: 'Antidepressant for depression and anxiety', sideEffects: 'Drowsiness, dry mouth, nausea', ageToUse: 'Adults', drugUsed: 'Escitalopram', dosagePerDay: '10-20mg once a day', link: 'https://en.wikipedia.org/wiki/Escitalopram' },
+    { name: 'Eplerenone', purpose: 'Used to treat high blood pressure and heart failure', sideEffects: 'Dizziness, fatigue, high potassium levels', ageToUse: 'Adults', drugUsed: 'Eplerenone', dosagePerDay: '25-50mg once a day', link: 'https://en.wikipedia.org/wiki/Eplerenone' },
+    { name: 'Enalapril', purpose: 'ACE inhibitor for high blood pressure', sideEffects: 'Cough, dizziness, fatigue', ageToUse: 'Adults', drugUsed: 'Enalapril', dosagePerDay: '5-40mg once or twice a day', link: 'https://en.wikipedia.org/wiki/Enalapril' },
+    { name: 'Esomeprazole', purpose: 'Proton pump inhibitor for acid reflux', sideEffects: 'Headache, nausea, stomach pain', ageToUse: 'Adults and children over 1', drugUsed: 'Esomeprazole', dosagePerDay: '20-40mg once a day', link: 'https://en.wikipedia.org/wiki/Esomeprazole' },
+
+    // F
+    { name: 'Fluoxetine', purpose: 'Antidepressant for depression and anxiety', sideEffects: 'Insomnia, dry mouth, nausea', ageToUse: 'Adults', drugUsed: 'Fluoxetine', dosagePerDay: '20-40mg once a day', link: 'https://en.wikipedia.org/wiki/Fluoxetine' },
+    { name: 'Furosemide', purpose: 'Diuretic for treating high blood pressure and edema', sideEffects: 'Dizziness, dehydration, low potassium', ageToUse: 'Adults and children', drugUsed: 'Furosemide', dosagePerDay: '20-80mg once or twice a day', link: 'https://en.wikipedia.org/wiki/Furosemide' },
+    { name: 'Fluticasone', purpose: 'Steroid for asthma and allergies', sideEffects: 'Hoarseness, sore throat, headaches', ageToUse: 'Adults and children over 4', drugUsed: 'Fluticasone', dosagePerDay: '1-2 inhalations once or twice a day', link: 'https://en.wikipedia.org/wiki/Fluticasone' },
+    { name: 'Fenofibrate', purpose: 'Used to lower cholesterol', sideEffects: 'Muscle pain, liver problems', ageToUse: 'Adults', drugUsed: 'Fenofibrate', dosagePerDay: '145mg once a day', link: 'https://en.wikipedia.org/wiki/Fenofibrate' },
+    { name: 'Famotidine', purpose: 'H2 antagonist for acid reflux and ulcers', sideEffects: 'Headache, dizziness', ageToUse: 'Adults and children', drugUsed: 'Famotidine', dosagePerDay: '20-40mg once a day', link: 'https://en.wikipedia.org/wiki/Famotidine' },
+
+    // G
+    { name: 'Gabapentin', purpose: 'Used to treat nerve pain and seizures', sideEffects: 'Dizziness, drowsiness, swelling', ageToUse: 'Adults and children over 3', drugUsed: 'Gabapentin', dosagePerDay: '300-3600mg in divided doses', link: 'https://en.wikipedia.org/wiki/Gabapentin' },
+    { name: 'Glipizide', purpose: 'Used to treat type 2 diabetes', sideEffects: 'Low blood sugar, weight gain', ageToUse: 'Adults', drugUsed: 'Glipizide', dosagePerDay: '5-40mg once a day', link: 'https://en.wikipedia.org/wiki/Glipizide' },
+    { name: 'Gliclazide', purpose: 'Used to treat type 2 diabetes', sideEffects: 'Low blood sugar, dizziness', ageToUse: 'Adults', drugUsed: 'Gliclazide', dosagePerDay: '40-120mg once a day', link: 'https://en.wikipedia.org/wiki/Gliclazide' },
+    { name: 'Granisetron', purpose: 'Antiemetic used to prevent nausea and vomiting', sideEffects: 'Headache, constipation', ageToUse: 'Adults and children over 6 months', drugUsed: 'Granisetron', dosagePerDay: '1mg once a day', link: 'https://en.wikipedia.org/wiki/Granisetron' },
+    { name: 'Gaviscon', purpose: 'Antacid for heartburn and acid reflux', sideEffects: 'Stomach upset, bloating', ageToUse: 'Adults and children', drugUsed: 'Alginic acid, Sodium bicarbonate', dosagePerDay: '10-20ml after meals', link: 'https://en.wikipedia.org/wiki/Gaviscon' },
+
+    // H
+    { name: 'Hydrochlorothiazide', purpose: 'Diuretic for high blood pressure and edema', sideEffects: 'Dizziness, dehydration, increased urination', ageToUse: 'Adults', drugUsed: 'Hydrochlorothiazide', dosagePerDay: '12.5-50mg once a day', link: 'https://en.wikipedia.org/wiki/Hydrochlorothiazide' },
+    { name: 'Hydrocodone', purpose: 'Pain reliever and cough suppressant', sideEffects: 'Drowsiness, constipation, nausea', ageToUse: 'Adults', drugUsed: 'Hydrocodone', dosagePerDay: '5-10mg every 4-6 hours as needed', link: 'https://en.wikipedia.org/wiki/Hydrocodone' },
+    { name: 'Hydroxychloroquine', purpose: 'Antimalarial and immunosuppressive', sideEffects: 'Headache, nausea, dizziness', ageToUse: 'Adults', drugUsed: 'Hydroxychloroquine', dosagePerDay: '200mg once or twice a day', link: 'https://en.wikipedia.org/wiki/Hydroxychloroquine' },
+    { name: 'Heparin', purpose: 'Anticoagulant to prevent blood clots', sideEffects: 'Bleeding, bruising', ageToUse: 'Adults', drugUsed: 'Heparin', dosagePerDay: 'As per doctor’s recommendation', link: 'https://en.wikipedia.org/wiki/Heparin' },
+    { name: 'Hydralazine', purpose: 'Vasodilator for high blood pressure', sideEffects: 'Headache, dizziness, nausea', ageToUse: 'Adults', drugUsed: 'Hydralazine', dosagePerDay: '10-50mg 2-4 times a day', link: 'https://en.wikipedia.org/wiki/Hydralazine' },
+
+    // I
+    { name: 'Ibuprofen', purpose: 'Pain reliever and anti-inflammatory', sideEffects: 'Stomach upset, headache', ageToUse: 'Adults and children over 6 months', drugUsed: 'Ibuprofen', dosagePerDay: '200-400mg every 4-6 hours', link: 'https://en.wikipedia.org/wiki/Ibuprofen' },
+    { name: 'Insulin', purpose: 'Used to treat diabetes', sideEffects: 'Low blood sugar, weight gain', ageToUse: 'Adults and children with diabetes', drugUsed: 'Insulin', dosagePerDay: 'As prescribed by a doctor', link: 'https://en.wikipedia.org/wiki/Insulin' },
+    { name: 'Ipratropium', purpose: 'Bronchodilator for COPD and asthma', sideEffects: 'Dry mouth, cough', ageToUse: 'Adults and children over 12', drugUsed: 'Ipratropium', dosagePerDay: '1-2 inhalations 3-4 times a day', link: 'https://en.wikipedia.org/wiki/Ipratropium' },
+    { name: 'Isosorbide Mononitrate', purpose: 'Used for chest pain and heart failure', sideEffects: 'Headache, dizziness', ageToUse: 'Adults', drugUsed: 'Isosorbide Mononitrate', dosagePerDay: '30-120mg once a day', link: 'https://en.wikipedia.org/wiki/Isosorbide_mononitrate' },
+    { name: 'Imatinib', purpose: 'Used for treating certain cancers', sideEffects: 'Fatigue, nausea, fluid retention', ageToUse: 'Adults and children', drugUsed: 'Imatinib', dosagePerDay: '400-800mg once a day', link: 'https://en.wikipedia.org/wiki/Imatinib' },
+
+    // J
+    { name: 'Januvia', purpose: 'Used to treat type 2 diabetes', sideEffects: 'Cold-like symptoms, headache', ageToUse: 'Adults', drugUsed: 'Sitagliptin', dosagePerDay: '100mg once a day', link: 'https://en.wikipedia.org/wiki/Sitagliptin' },
+
+    // K
+    { name: 'Ketoconazole', purpose: 'Antifungal medication for fungal infections', sideEffects: 'Nausea, headache, dizziness', ageToUse: 'Adults and children over 2', drugUsed: 'Ketoconazole', dosagePerDay: '200-400mg once a day', link: 'https://en.wikipedia.org/wiki/Ketoconazole' },
+
+    // L
+    { name: 'Lisinopril', purpose: 'ACE inhibitor for high blood pressure', sideEffects: 'Cough, dizziness', ageToUse: 'Adults', drugUsed: 'Lisinopril', dosagePerDay: '10-40mg once a day', link: 'https://en.wikipedia.org/wiki/Lisinopril' },
+    { name: 'Loratadine', purpose: 'Antihistamine for allergy symptoms', sideEffects: 'Headache, dry mouth', ageToUse: 'Adults and children over 2', drugUsed: 'Loratadine', dosagePerDay: '10mg once a day', link: 'https://en.wikipedia.org/wiki/Loratadine' },
+    { name: 'Levothyroxine', purpose: 'Thyroid hormone for hypothyroidism', sideEffects: 'Weight loss, heart palpitations', ageToUse: 'Adults and children', drugUsed: 'Levothyroxine', dosagePerDay: '25-200mcg once a day', link: 'https://en.wikipedia.org/wiki/Levothyroxine' },
+
+    // M
+    { name: 'Metformin', purpose: 'Used to treat type 2 diabetes', sideEffects: 'Nausea, diarrhea, stomach upset', ageToUse: 'Adults', drugUsed: 'Metformin', dosagePerDay: '500-1000mg twice a day', link: 'https://en.wikipedia.org/wiki/Metformin' },
+    { name: 'Meloxicam', purpose: 'Nonsteroidal anti-inflammatory drug (NSAID)', sideEffects: 'Stomach pain, headache', ageToUse: 'Adults', drugUsed: 'Meloxicam', dosagePerDay: '7.5-15mg once a day', link: 'https://en.wikipedia.org/wiki/Meloxicam' },
+    { name: 'Mupirocin', purpose: 'Antibiotic for skin infections', sideEffects: 'Burning, stinging, itching', ageToUse: 'Adults and children', drugUsed: 'Mupirocin', dosagePerDay: 'Apply to affected area 3 times a day', link: 'https://en.wikipedia.org/wiki/Mupirocin' },
+
+    // N
+    { name: 'Naproxen', purpose: 'Pain reliever and anti-inflammatory', sideEffects: 'Stomach upset, dizziness', ageToUse: 'Adults and children over 12', drugUsed: 'Naproxen', dosagePerDay: '250-500mg twice a day', link: 'https://en.wikipedia.org/wiki/Naproxen' },
+
+    // O
+    { name: 'Omeprazole', purpose: 'Proton pump inhibitor for acid reflux', sideEffects: 'Headache, nausea, stomach pain', ageToUse: 'Adults and children over 1', drugUsed: 'Omeprazole', dosagePerDay: '20-40mg once a day', link: 'https://en.wikipedia.org/wiki/Omeprazole' },
+
+    // P
+    { name: 'Paracetamol', purpose: 'Pain reliever and fever reducer', ingredients: 'Paracetamol (500mg)', drug: 'Acetaminophen', link: 'https://en.wikipedia.org/wiki/Paracetamol' },
+    { name: 'Prednisone', purpose: 'Steroid for inflammation and autoimmune diseases', sideEffects: 'Weight gain, mood changes, fluid retention', ageToUse: 'Adults and children', drugUsed: 'Prednisone', dosagePerDay: '5-60mg once a day', link: 'https://en.wikipedia.org/wiki/Prednisone' },
+    { name: 'Propranolol', purpose: 'Beta blocker for high blood pressure and anxiety', sideEffects: 'Fatigue, dizziness', ageToUse: 'Adults', drugUsed: 'Propranolol', dosagePerDay: '20-320mg per day', link: 'https://en.wikipedia.org/wiki/Propranolol' },
+    
+
+    // S
+    { name: 'Sildenafil', purpose: 'Used to treat erectile dysfunction', sideEffects: 'Headache, flushing, indigestion', ageToUse: 'Adults', drugUsed: 'Sildenafil', dosagePerDay: '50mg once a day', link: 'https://en.wikipedia.org/wiki/Sildenafil' },
+
+    // T
+    { name: 'Tamsulosin', purpose: 'Used to treat benign prostate hyperplasia', sideEffects: 'Dizziness, headache', ageToUse: 'Adults', drugUsed: 'Tamsulosin', dosagePerDay: '0.4-0.8mg once a day', link: 'https://en.wikipedia.org/wiki/Tamsulosin' },
+
+    // U
+    { name: 'Ursodiol', purpose: 'Used to treat gallstones and liver disease', sideEffects: 'Diarrhea, nausea', ageToUse: 'Adults', drugUsed: 'Ursodiol', dosagePerDay: '250-500mg twice a day', link: 'https://en.wikipedia.org/wiki/Ursodiol' },
+
+    // V
+    { name: 'Valacyclovir', purpose: 'Antiviral for herpes and shingles', sideEffects: 'Headache, nausea', ageToUse: 'Adults and children', drugUsed: 'Valacyclovir', dosagePerDay: '500-1000mg twice a day', link: 'https://en.wikipedia.org/wiki/Valacyclovir' },
+
+
+
+    // N
+    { name: 'Naproxen', purpose: 'Pain reliever and anti-inflammatory', sideEffects: 'Stomach upset, dizziness', ageToUse: 'Adults and children over 12', drugUsed: 'Naproxen', dosagePerDay: '250-500mg twice a day', link: 'https://en.wikipedia.org/wiki/Naproxen' },
+    { name: 'Nystatin', purpose: 'Antifungal for yeast infections', sideEffects: 'Stomach upset, diarrhea', ageToUse: 'Adults and children', drugUsed: 'Nystatin', dosagePerDay: '500,000 units 3-4 times a day', link: 'https://en.wikipedia.org/wiki/Nystatin' },
+    { name: 'Naltrexone', purpose: 'Used to treat alcohol and opioid addiction', sideEffects: 'Headache, nausea, dizziness', ageToUse: 'Adults', drugUsed: 'Naltrexone', dosagePerDay: '50mg once a day', link: 'https://en.wikipedia.org/wiki/Naltrexone' },
+    { name: 'Nitroglycerin', purpose: 'Used to treat chest pain (angina)', sideEffects: 'Headache, dizziness, flushing', ageToUse: 'Adults', drugUsed: 'Nitroglycerin', dosagePerDay: '0.3-0.6mg every 5 minutes as needed', link: 'https://en.wikipedia.org/wiki/Nitroglycerin' },
+    { name: 'Nevirapine', purpose: 'Antiretroviral medication for HIV/AIDS', sideEffects: 'Rash, nausea, headache', ageToUse: 'Adults and children', drugUsed: 'Nevirapine', dosagePerDay: '200mg once a day', link: 'https://en.wikipedia.org/wiki/Nevirapine' },
+
+    // O
+    { name: 'Omeprazole', purpose: 'Proton pump inhibitor for acid reflux', sideEffects: 'Headache, nausea, stomach pain', ageToUse: 'Adults and children over 1', drugUsed: 'Omeprazole', dosagePerDay: '20-40mg once a day', link: 'https://en.wikipedia.org/wiki/Omeprazole' },
+    { name: 'Ondansetron', purpose: 'Antiemetic used to prevent nausea and vomiting', sideEffects: 'Headache, constipation', ageToUse: 'Adults and children', drugUsed: 'Ondansetron', dosagePerDay: '4-8mg every 8 hours', link: 'https://en.wikipedia.org/wiki/Ondansetron' },
+    { name: 'Oxycodone', purpose: 'Opioid pain reliever', sideEffects: 'Drowsiness, constipation, nausea', ageToUse: 'Adults', drugUsed: 'Oxycodone', dosagePerDay: '5-10mg every 4-6 hours', link: 'https://en.wikipedia.org/wiki/Oxycodone' },
+    { name: 'Omalizumab', purpose: 'Monoclonal antibody used for asthma and allergies', sideEffects: 'Headache, sore throat, nausea', ageToUse: 'Adults and children over 12', drugUsed: 'Omalizumab', dosagePerDay: '150-375mg every 2-4 weeks', link: 'https://en.wikipedia.org/wiki/Omalizumab' },
+    { name: 'Oxazepam', purpose: 'Benzodiazepine for anxiety and alcohol withdrawal', sideEffects: 'Drowsiness, dizziness, fatigue', ageToUse: 'Adults', drugUsed: 'Oxazepam', dosagePerDay: '10-30mg 3 times a day', link: 'https://en.wikipedia.org/wiki/Oxazepam' },
+
+    // P
+    { name: 'Prednisone', purpose: 'Steroid for inflammation and autoimmune diseases', sideEffects: 'Weight gain, mood changes, fluid retention', ageToUse: 'Adults and children', drugUsed: 'Prednisone', dosagePerDay: '5-60mg once a day', link: 'https://en.wikipedia.org/wiki/Prednisone' },
+    { name: 'Propranolol', purpose: 'Beta blocker for high blood pressure and anxiety', sideEffects: 'Fatigue, dizziness', ageToUse: 'Adults', drugUsed: 'Propranolol', dosagePerDay: '20-320mg per day', link: 'https://en.wikipedia.org/wiki/Propranolol' },
+    { name: 'Paroxetine', purpose: 'Antidepressant for depression and anxiety', sideEffects: 'Drowsiness, dry mouth, nausea', ageToUse: 'Adults', drugUsed: 'Paroxetine', dosagePerDay: '20-50mg once a day', link: 'https://en.wikipedia.org/wiki/Paroxetine' },
+    { name: 'Penicillin', purpose: 'Antibiotic for bacterial infections', sideEffects: 'Rash, nausea, diarrhea', ageToUse: 'Adults and children', drugUsed: 'Penicillin', dosagePerDay: '250-500mg every 6-8 hours', link: 'https://en.wikipedia.org/wiki/Penicillin' },
+    { name: 'Prazosin', purpose: 'Alpha blocker for high blood pressure and PTSD', sideEffects: 'Dizziness, headache', ageToUse: 'Adults', drugUsed: 'Prazosin', dosagePerDay: '1-5mg twice a day', link: 'https://en.wikipedia.org/wiki/Prazosin' },
+   
+
+    // Q
+    { name: 'Quetiapine', purpose: 'Antipsychotic for schizophrenia and bipolar disorder', sideEffects: 'Dizziness, drowsiness, weight gain', ageToUse: 'Adults', drugUsed: 'Quetiapine', dosagePerDay: '25-800mg once a day', link: 'https://en.wikipedia.org/wiki/Quetiapine' },
+    { name: 'Quinapril', purpose: 'ACE inhibitor for high blood pressure', sideEffects: 'Dizziness, cough, fatigue', ageToUse: 'Adults', drugUsed: 'Quinapril', dosagePerDay: '10-40mg once a day', link: 'https://en.wikipedia.org/wiki/Quinapril' },
+    { name: 'Quinine', purpose: 'Used for malaria treatment', sideEffects: 'Headache, dizziness, nausea', ageToUse: 'Adults and children', drugUsed: 'Quinine', dosagePerDay: '200-300mg 3 times a day', link: 'https://en.wikipedia.org/wiki/Quinine' },
+
+    // R
+    { name: 'Ranitidine', purpose: 'H2 antagonist for acid reflux and ulcers', sideEffects: 'Headache, dizziness', ageToUse: 'Adults and children', drugUsed: 'Ranitidine', dosagePerDay: '150mg twice a day', link: 'https://en.wikipedia.org/wiki/Ranitidine' },
+    { name: 'Risperidone', purpose: 'Antipsychotic for schizophrenia and bipolar disorder', sideEffects: 'Drowsiness, weight gain, headache', ageToUse: 'Adults and children', drugUsed: 'Risperidone', dosagePerDay: '1-6mg once a day', link: 'https://en.wikipedia.org/wiki/Risperidone' },
+    { name: 'Rosuvastatin', purpose: 'Statin for lowering cholesterol', sideEffects: 'Muscle pain, liver issues', ageToUse: 'Adults', drugUsed: 'Rosuvastatin', dosagePerDay: '10-40mg once a day', link: 'https://en.wikipedia.org/wiki/Rosuvastatin' },
+    { name: 'Rofecoxib', purpose: 'NSAID for pain and inflammation', sideEffects: 'Stomach upset, cardiovascular issues', ageToUse: 'Adults', drugUsed: 'Rofecoxib', dosagePerDay: '25-50mg once a day', link: 'https://en.wikipedia.org/wiki/Rofecoxib' },
+    { name: 'Rifampin', purpose: 'Antibiotic used for tuberculosis', sideEffects: 'Stomach upset, red-orange urine', ageToUse: 'Adults and children', drugUsed: 'Rifampin', dosagePerDay: '10mg per kg of body weight once a day', link: 'https://en.wikipedia.org/wiki/Rifampin' },
+
+    // S
+    { name: 'Sildenafil', purpose: 'Used to treat erectile dysfunction', sideEffects: 'Headache, flushing, indigestion', ageToUse: 'Adults', drugUsed: 'Sildenafil', dosagePerDay: '50mg once a day', link: 'https://en.wikipedia.org/wiki/Sildenafil' },
+    { name: 'Sertraline', purpose: 'Antidepressant for depression and anxiety', sideEffects: 'Drowsiness, dry mouth, nausea', ageToUse: 'Adults', drugUsed: 'Sertraline', dosagePerDay: '25-200mg once a day', link: 'https://en.wikipedia.org/wiki/Sertraline' },
+    { name: 'Simvastatin', purpose: 'Used to lower cholesterol', sideEffects: 'Muscle pain, liver issues', ageToUse: 'Adults', drugUsed: 'Simvastatin', dosagePerDay: '10-40mg once a day', link: 'https://en.wikipedia.org/wiki/Simvastatin' },
+    { name: 'Spironolactone', purpose: 'Diuretic for high blood pressure and fluid retention', sideEffects: 'Dizziness, potassium imbalance', ageToUse: 'Adults', drugUsed: 'Spironolactone', dosagePerDay: '25-100mg once a day', link: 'https://en.wikipedia.org/wiki/Spironolactone' },
+    { name: 'Sodium bicarbonate', purpose: 'Used to treat acid indigestion', sideEffects: 'Stomach upset, flatulence', ageToUse: 'Adults and children', drugUsed: 'Sodium bicarbonate', dosagePerDay: '1/2 to 1 teaspoon as needed', link: 'https://en.wikipedia.org/wiki/Sodium_bicarbonate' },
+
+    // T
+    { name: 'Tamsulosin', purpose: 'Used to treat benign prostate hyperplasia', sideEffects: 'Dizziness, headache', ageToUse: 'Adults', drugUsed: 'Tamsulosin', dosagePerDay: '0.4-0.8mg once a day', link: 'https://en.wikipedia.org/wiki/Tamsulosin' },
+    { name: 'Topiramate', purpose: 'Used for seizures and migraine prevention', sideEffects: 'Dizziness, fatigue, weight loss', ageToUse: 'Adults and children', drugUsed: 'Topiramate', dosagePerDay: '25-100mg twice a day', link: 'https://en.wikipedia.org/wiki/Topiramate' },
+    { name: 'Tadalafil', purpose: 'Used to treat erectile dysfunction and pulmonary hypertension', sideEffects: 'Headache, flushing', ageToUse: 'Adults', drugUsed: 'Tadalafil', dosagePerDay: '10-20mg once a day', link: 'https://en.wikipedia.org/wiki/Tadalafil' },
+    { name: 'Tramadol', purpose: 'Opioid pain reliever', sideEffects: 'Dizziness, nausea, constipation', ageToUse: 'Adults', drugUsed: 'Tramadol', dosagePerDay: '50-100mg every 4-6 hours as needed', link: 'https://en.wikipedia.org/wiki/Tramadol' },
+    { name: 'Thyroxine', purpose: 'Thyroid hormone for hypothyroidism', sideEffects: 'Weight loss, palpitations', ageToUse: 'Adults and children', drugUsed: 'Thyroxine', dosagePerDay: '25-200mcg once a day', link: 'https://en.wikipedia.org/wiki/Thyroxine' },
+
+    // U
+    { name: 'Ursodiol', purpose: 'Used to treat gallstones and liver disease', sideEffects: 'Diarrhea, nausea', ageToUse: 'Adults', drugUsed: 'Ursodiol', dosagePerDay: '250-500mg twice a day', link: 'https://en.wikipedia.org/wiki/Ursodiol' },
+
+    // V
+    { name: 'Valacyclovir', purpose: 'Antiviral for herpes and shingles', sideEffects: 'Headache, nausea', ageToUse: 'Adults and children', drugUsed: 'Valacyclovir', dosagePerDay: '500-1000mg twice a day', link: 'https://en.wikipedia.org/wiki/Valacyclovir' },
+
+    // W
+    { name: 'Warfarin', purpose: 'Anticoagulant to prevent blood clots', sideEffects: 'Bleeding, bruising', ageToUse: 'Adults', drugUsed: 'Warfarin', dosagePerDay: '2-10mg once a day', link: 'https://en.wikipedia.org/wiki/Warfarin' },
+
+    // Z
+    { name: 'Zolpidem', purpose: 'Used for short-term treatment of insomnia', sideEffects: 'Drowsiness, headache, dizziness', ageToUse: 'Adults', drugUsed: 'Zolpidem', dosagePerDay: '5-10mg before bedtime', link: 'https://en.wikipedia.org/wiki/Zolpidem' },
+    { name: 'Zinc oxide', purpose: 'Used for skin protection and wound healing', sideEffects: 'Skin irritation', ageToUse: 'Adults and children', drugUsed: 'Zinc oxide', dosagePerDay: 'Apply to affected area 1-3 times a day', link: 'https://en.wikipedia.org/wiki/Zinc_oxide' },
+
+
+// Add more entries for each subsequent letter as needed...
+
+];
+
+    // Function to show suggestions as user types
+    function showSuggestions(value) {
+        let suggestionsContainer = document.getElementById('suggestions');
+        suggestionsContainer.innerHTML = '';
+        document.getElementById('medicineDetails').style.display = 'none'; // Hide the medicine details when typing new search
+
+        if (value.length > 0) {
+            const filteredMedicines = medicines.filter(med => med.name.toLowerCase().startsWith(value.toLowerCase()));
+            suggestionsContainer.style.display = filteredMedicines.length > 0 ? 'block' : 'none';
+            
+            filteredMedicines.forEach(med => {
+                let suggestionItem = document.createElement('div');
+                suggestionItem.classList.add('suggestion-item');
+                suggestionItem.textContent = med.name;
+                suggestionItem.onclick = () => {
+                    // Update the search input value with the selected medicine
+                    document.getElementById('searchInput').value = med.name;
+
+                    // Close the suggestions box
+                    suggestionsContainer.style.display = 'none';
+
+                    // Reset and display new medicine details
+                    showMedicineDetails(med);
+                };
+                suggestionsContainer.appendChild(suggestionItem);
+            });
+        } else {
+            suggestionsContainer.style.display = 'none';
+        }
+    }
+
+    // Function to display selected medicine details
+    function showMedicineDetails(medicine) {
+        // Reset previous details and show the selected one
+        document.getElementById('medicineDetails').style.display = 'block';
+        document.getElementById('medicineName').textContent = medicine.name;
+        document.getElementById('medicineDetails').innerHTML = `
+            <h2>${medicine.name}</h2>
+            <p><strong>Purpose:</strong> ${medicine.purpose}</p>
+            <p><strong>Side Effects:</strong> ${medicine.sideEffects}</p>
+            <p><strong>Age to Use:</strong> ${medicine.ageToUse}</p>
+            <p><strong>Drugs Used:</strong> ${medicine.drugUsed}</p>
+            <p><strong>Dosage per Day:</strong> ${medicine.dosagePerDay}</p>
+            <p><strong>References:</strong> <a href="${medicine.link}" target="_blank">Wikipedia</a></p>
+        `;
+    }
+</script>
+
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>
