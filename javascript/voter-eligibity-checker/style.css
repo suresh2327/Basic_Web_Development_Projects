@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.container{
+    background-color: antiquewhite;
+    padding: 10px;
+    text-align: center;
+    margin: auto;
+}
+label,input{
+
+    margin: 4px;
+}
+#btn{
+    background-color: aqua;
+    padding: 2px 5px;
+    font-size: 25px;
+    cursor: pointer;
+    display: block;
+    margin-left: 600px;
+    margin-top: 10px;
+}
+#myh4{
+    background-color: aliceblue;
+    padding: auto;
+    color: chocolate;
+    text-align: center;
+    margin-top: 2px;
+}
