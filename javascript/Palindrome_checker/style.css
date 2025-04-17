@@ -1,0 +1,38 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.container{
+    background-color: aquamarine;
+    width: fit-content;
+    padding: 10px;
+    margin: 100px auto;
+    box-shadow: 0 0 5px;
+    border-radius: 10px;
+    text-align: center;
+}
+#mytext{
+    border-radius:5px ;
+    border: none;
+    border-bottom: 2px solid gray;
+    color:black;
+    padding: 5px;
+    font-weight: bold;
+}
+#mybutton{
+    margin-top: 30px;
+    background-color: skyblue;
+    padding: 5px 10px;
+    border: none;
+    font-size: 1.5em;
+    border-radius: 5px;
+    box-shadow: 0 0 5px;
+  
+}
+#mybutton:active{
+    background-color: rgb(96, 164, 191);
+    color:rgb(10, 14, 237);
+}
+#result{
+    color: darkmagenta;
+    font-size: 1.5em;
+}
